@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+
+<html lang="es">
+
+<head>
+
+<meta charset="UTF-8"/>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<title>Tucumán Propone</title>
+
+<script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+<style>
+
+*{box-sizing:border-box;margin:0;padding:0;}
+
+body{font-family:system-ui,sans-serif;min-height:100vh;}
+
+input,select,textarea,button{font-family:inherit;}
+
+</style>
+
+</head>
+
+<body>
+
+<div id="root"></div>
+
+<script type="text/babel">
+
+
+
+const ADMIN_CODE = "senadoraavila2026";
+
+const MILITANTE_CODE = "tucuman2026";
+
+const PURPLE = "#4B2C8A";
+
+const FOTO = "https://res.cloudinary.com/djml0aqsp/image/upload/v1780012931/Beatriz-Avila-1_xmrzdi.webp";
+
+
+
+const MESES = ["ENE","FEB","MAR","ABR","MAY","JUN","JUL","AGO","SEP","OCT","NOV","DIC"];
+
+
+
+const MUNICIPIOS = ["San Miguel de Tucumán","Banda del Río Salí","Tafí Viejo","Yerba Buena","Lules","Famaillá","Monteros","Concepción","Aguilares","Alberdi","Simoca","Graneros","Otro"];
+
+const CATEGORIAS_PROP = ["Infraestructura","Salud","Educación","Seguridad","Medioambiente","Economía","Otro"];
+
+const CATEGORIAS_PROB = ["Infraestructura","Salud","Seguridad","Medioambiente","Servicios","Otro"];
+
+
+
+const badgeColor = {
+
+  Infraestructura:{bg:"#EEEDFE",color:"#3C3489"},
+
+  Salud:{bg:"#EAF3DE",color:"#27500A"},
+
+  Educación:{bg:"#E6F1FB",color:"#0C447C"},
+
+  Seguridad:{bg:"#FCEBEB",color:"#791F1F"},
+
+  Medioambiente:{bg:"#EAF3DE",color:"#27500A"},
+
+  Economía:{bg:"#FAEEDA",color:"#633806"},
+
+  Servicios:{bg:"#FAEEDA",color:"#633806"},
+
+  urgente:{bg:"#FCEBEB",color:"#791F1F"},
+
+  Otro:{bg:"#F1EFE8",color:"#444441"},
+
+};
+
+
+
+const DEFAULT_DATA = {
+
+  propuestas:[
+
+    {id:1,titulo:"Pavimentación en barrio Oeste",municipio:"San Miguel de Tucumán",categoria:"Infraestructura",autor:"Carlos M.",votos:18,estado:"pendiente",fecha:"2025-05-01"},
+
+    {id:2,titulo:"Centro de salud en Tafí Viejo",municipio:"Tafí Viejo",categoria:"Salud",autor:"María G.",votos:32,estado:"elevada",fecha:"2025-04-28"},
+
+    {id:3,titulo:"Iluminación en acceso a Lules",municipio:"Lules",categoria:"Infraestructura",autor:"Roberto S.",votos:14,estado:"pendiente",fecha:"2025-05-05"},
+
+  ],
+
+  problemas:[
+
+    {id:4,titulo:"Cortes de agua frecuentes",municipio:"Banda del Río Salí",categoria:"Servicios",autor:"Ana P.",urgente:true,fecha:"2025-05-13"},
+
+    {id:5,titulo:"Basural en zona industrial",municipio:"Yerba Buena",categoria:"Medioambiente",autor:"Luis R.",urgente:false,fecha:"2025-05-10"},
+
+  ],
+
+  agenda:[
+
+    {id:6,titulo:"Reunión de juventudes LLA",municipio:"San Miguel de Tucumán",lugar:"Casa de la Juventud",fecha:"2025-05-18",hora:"18:00"},
+
+    {id:7,titulo:"Visita territorial",municipio:"Tafí Viejo",lugar:"Plaza central",fecha:"2025-05-22",hora:"10:00"},
+
+    {id:8,titulo:"Acto con la Senadora Ávila",municipio:"Monteros",lugar:"Teatro Municipal",fecha:"2025-05-30",hora:"19:00"},
+
+  ],
+
+  nextId:9
+
+};
+
+
+
+function load(key,fallback){try{const v=localStorage.getItem(key);return v?JSON.parse(v):fallback;}catch(e){return fallback;}}
+
+function save(key,val){try{localStorage.setItem(key,JSON.stringify(val));}catch(e){}}
+
+
+
+function Badge({label}){const s=badgeColor[label]||badgeColor["Otro"];return <span style={{display:"inline-block",fontSize:10,padding:"2px 8px",borderRadius:99,background:s.bg,color:s.color,marginTop:6}}>{label}</span>;}
+
+function Toast({msg}){return msg?<div style={{position:"fixed",bottom:24,left:"50%",transform:"translateX(-50%)",background:"#27500A",color:"#EAF3DE",padding:"10px 20px",borderRadius:99,fontSize:13,zIndex:999,whiteSpace:"nowrap"}}>{msg}</div>:null;}
+
+function Inp({label,...p}){return <div style={{marginBottom:10}}>{label&&<label style={{fontSize:12,color:"#555",display:"block",marginBottom:4,fontWeight:500}}>{label}</label>}<input style={{width:"100%",fontSize:13,borderRadius:8,padding:"9px 10px",border:"1px solid #ddd",background:"#fff",color:"#222"}} {...p}/></div>;}
+
+function Sel({label,options,...p}){return <div style={{marginBottom:10}}>{label&&<label style={{fontSize:12,color:"#555",display:"block",marginBottom:4,fontWeight:500}}>{label}</label>}<select style={{width:"100%",fontSize:13,borderRadius:8,padding:"9px 10px",border:"1px solid #ddd",background:"#fff",color:"#222"}} {...p}>{options.map(o=><option key={o}>{o}</option>)}</select></div>;}
+
+function Txta({label,...p}){return <div style={{marginBottom:10}}>{label&&<label style={{fontSize:12,color:"#555",display:"block",marginBottom:4,fontWeight:500}}>{label}</label>}<textarea style={{width:"100%",fontSize:13,borderRadius:8,padding:"9px 10px",border:"1px solid #ddd",background:"#fff",color:"#222",height:72,resize:"none",fontFamily:"inherit"}} {...p}/></div>;}
+
+function Btn({children,...p}){return <button style={{width:"100%",padding:11,background:PURPLE,color:"#fff",border:"none",borderRadius:8,fontSize:14,fontWeight:600,cursor:"pointer",marginTop:4}} {...p}>{children}</button>;}
+
+function Card({children,urgent}){return <div style={{background:"#f9f9f9",borderRadius:8,padding:12,marginBottom:10,border:"1px solid "+(urgent?"#E24B4A":"#e5e5e5")}}>{children}</div>;}
+
+
+
+function App(){
+
+  const [screen,setScreen]=React.useState("login");
+
+  const [role,setRole]=React.useState(null);
+
+  const [user,setUser]=React.useState("");
+
+  const [pass,setPass]=React.useState("");
+
+  const [loginErr,setLoginErr]=React.useState("");
+
+  const [tab,setTab]=React.useState("propuestas");
+
+  const [propuestas,setPropuestasRaw]=React.useState(()=>load("tp_propuestas",DEFAULT_DATA.propuestas));
+
+  const [problemas,setProblemasRaw]=React.useState(()=>load("tp_problemas",DEFAULT_DATA.problemas));
+
+  const [agenda,setAgendaRaw]=React.useState(()=>load("tp_agenda",DEFAULT_DATA.agenda));
+
+  const [nextId,setNextIdRaw]=React.useState(()=>load("tp_nextid",DEFAULT_DATA.nextId));
+
+  const [toast,setToast]=React.useState("");
+
+  const [pNombre,setPNombre]=React.useState("");
+
+  const [pMuni,setPMuni]=React.useState(MUNICIPIOS[0]);
+
+  const [pCat,setPCat]=React.useState(CATEGORIAS_PROP[0]);
+
+  const [pTitulo,setPTitulo]=React.useState("");
+
+  const [pbNombre,setPbNombre]=React.useState("");
+
+  const [pbMuni,setPbMuni]=React.useState(MUNICIPIOS[0]);
+
+  const [pbCat,setPbCat]=React.useState(CATEGORIAS_PROB[0]);
+
+  const [pbTitulo,setPbTitulo]=React.useState("");
+
+  const [pbUrgente,setPbUrgente]=React.useState(false);
+
+  const [agTitulo,setAgTitulo]=React.useState("");
+
+  const [agMuni,setAgMuni]=React.useState(MUNICIPIOS[0]);
+
+  const [agLugar,setAgLugar]=React.useState("");
+
+  const [agFecha,setAgFecha]=React.useState("");
+
+  const [agHora,setAgHora]=React.useState("");
+
+
+
+  function setPropuestas(fn){setPropuestasRaw(prev=>{const next=typeof fn==="function"?fn(prev):fn;save("tp_propuestas",next);return next;});}
+
+  function setProblemas(fn){setProblemasRaw(prev=>{const next=typeof fn==="function"?fn(prev):fn;save("tp_problemas",next);return next;});}
+
+  function setAgenda(fn){setAgendaRaw(prev=>{const next=typeof fn==="function"?fn(prev):fn;save("tp_agenda",next);return next;});}
+
+  function setNextId(fn){setNextIdRaw(prev=>{const next=typeof fn==="function"?fn(prev):fn;save("tp_nextid",next);return next;});}
+
+  function showToast(msg){setToast(msg);setTimeout(()=>setToast(""),2500);}
+
+
+
+  function login(){
+
+    if(pass===ADMIN_CODE){setRole("admin");setScreen("app");setLoginErr("");}
+
+    else if(pass===MILITANTE_CODE){setRole("militante");setScreen("app");setLoginErr("");}
+
+    else setLoginErr("Código incorrecto. Intentá de nuevo.");
+
+  }
+
+
+
+  function votar(id){setPropuestas(prev=>prev.map(p=>p.id===id?{...p,votos:p.votos+1}:p));showToast("Apoyo registrado");}
+
+  function elevar(id){setPropuestas(prev=>prev.map(p=>p.id===id?{...p,estado:"elevada"}:p));showToast("Propuesta elevada al Senado");}
+
+
+
+  function enviarPropuesta(){
+
+    if(!pNombre||!pTitulo){showToast("Completá nombre y propuesta");return;}
+
+    setPropuestas(prev=>[{id:nextId,titulo:pTitulo,municipio:pMuni,categoria:pCat,autor:pNombre,votos:0,estado:"pendiente",fecha:new Date().toISOString().slice(0,10)},...prev]);
+
+    setNextId(n=>n+1);setPNombre("");setPTitulo("");showToast("Propuesta enviada");
+
+  }
+
+
+
+  function enviarProblema(){
+
+    if(!pbNombre||!pbTitulo){showToast("Completá todos los campos");return;}
+
+    setProblemas(prev=>[{id:nextId,titulo:pbTitulo,municipio:pbMuni,categoria:pbCat,autor:pbNombre,urgente:pbUrgente,fecha:new Date().toISOString().slice(0,10)},...prev]);
+
+    setNextId(n=>n+1);setPbNombre("");setPbTitulo("");setPbUrgente(false);showToast("Problema reportado");
+
+  }
+
+
+
+  function agregarAgenda(){
+
+    if(!agTitulo||!agFecha){showToast("Completá título y fecha");return;}
+
+    setAgenda(prev=>[...prev,{id:nextId,titulo:agTitulo,municipio:agMuni,lugar:agLugar,fecha:agFecha,hora:agHora}].sort((a,b)=>a.fecha.localeCompare(b.fecha)));
+
+    setNextId(n=>n+1);setAgTitulo("");setAgLugar("");setAgFecha("");setAgHora("");showToast("Actividad guardada");
+
+  }
+
+
+
+  const top5=[...propuestas].sort((a,b)=>b.votos-a.votos).slice(0,5);
+
+  const tabs=[{id:"propuestas",label:"Propuestas"},{id:"problemas",label:"Problemas"},{id:"agenda",label:"Agenda"},...(role==="admin"?[{id:"panel",label:"Panel"}]:[])];
+
+
+
+  if(screen==="login") return (
+
+    <div style={{background:"linear-gradient(rgba(40,20,80,0.72),rgba(50,25,100,0.80)),url('"+FOTO+"') center 30%/cover no-repeat",minHeight:"100vh",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",padding:20}}>
+
+      <div style={{width:80,height:80,background:"rgba(255,255,255,0.18)",border:"3px solid rgba(255,255,255,0.8)",borderRadius:"50%",display:"flex",alignItems:"center",justifyContent:"center",color:"#fff",fontSize:26,fontWeight:800,marginBottom:12,textShadow:"0 2px 6px rgba(0,0,0,0.5)"}}>TP</div>
+
+      <div style={{fontSize:28,fontWeight:800,color:"#FFFFFF",textShadow:"0 2px 10px rgba(0,0,0,0.8)",marginBottom:6}}>Tucumán Propone</div>
+
+      <div style={{fontSize:15,fontWeight:700,color:"#FFFFFF",textShadow:"0 2px 8px rgba(0,0,0,0.9)",marginBottom:28}}>Sra. Beatriz Ávila · Libertad Avanza Tucumán</div>
+
+      <div style={{background:"#fff",borderRadius:16,padding:"28px 24px",boxShadow:"0 8px 32px rgba(0,0,0,0.35)",width:"100%",maxWidth:360}}>
+
+        <Inp label="Tu nombre" value={user} onChange={e=>setUser(e.target.value)} placeholder="Nombre y apellido"/>
+
+        <Inp label="Código de acceso" value={pass} onChange={e=>setPass(e.target.value)} type="password" placeholder="••••••••"/>
+
+        {loginErr&&<div style={{fontSize:12,color:"#A32D2D",marginBottom:8}}>{loginErr}</div>}
+
+        <Btn onClick={login}>Ingresar</Btn>
+
+        <div style={{fontSize:11,color:"#999",marginTop:12,textAlign:"center"}}>Contactá a tu referente para obtener el código de acceso</div>
+
+      </div>
+
+    </div>
+
+  );
+
+
+
+  return (
+
+    <div style={{maxWidth:420,margin:"0 auto",background:"#fff",minHeight:"100vh"}}>
+
+      <div style={{background:"linear-gradient(rgba(75,44,138,0.55),rgba(75,44,138,0.70)),url('"+FOTO+"') center 30%/cover no-repeat",padding:"14px 20px",display:"flex",alignItems:"center",justifyContent:"space-between",position:"sticky",top:0,zIndex:10,minHeight:70}}>
+
+        <div style={{display:"flex",alignItems:"center",gap:10}}>
+
+          <div style={{width:36,height:36,background:"rgba(255,255,255,0.2)",border:"2px solid rgba(255,255,255,0.8)",borderRadius:"50%",display:"flex",alignItems:"center",justifyContent:"center",color:"#fff",fontSize:13,fontWeight:800}}>TP</div>
+
+          <div>
+
+            <div style={{color:"#fff",fontSize:15,fontWeight:700,textShadow:"0 1px 4px rgba(0,0,0,0.5)"}}>Tucumán Propone</div>
+
+            <div style={{color:"rgba(255,255,255,0.9)",fontSize:11,textShadow:"0 1px 3px rgba(0,0,0,0.5)"}}>{user||"Militante"} · {role==="admin"?"Panel Ávila":"Militante"}</div>
+
+          </div>
+
+        </div>
+
+        <button onClick={()=>{setScreen("login");setPass("");setUser("");}} style={{background:"none",border:"none",color:"rgba(255,255,255,0.9)",cursor:"pointer",fontSize:13,fontWeight:500}}>Salir</button>
+
+      </div>
+
+
+
+      <div style={{display:"flex",borderBottom:"1px solid #e5e5e5",position:"sticky",top:70,background:"#fff",zIndex:9}}>
+
+        {tabs.map(t=>(
+
+          <button key={t.id} onClick={()=>setTab(t.id)} style={{flex:1,padding:"10px 4px",background:"none",border:"none",borderBottom:tab===t.id?"2px solid "+PURPLE:"none",cursor:"pointer",fontSize:11,color:tab===t.id?PURPLE:"#888",fontWeight:tab===t.id?600:400}}>
+
+            {t.label}
+
+          </button>
+
+        ))}
+
+      </div>
+
+
+
+      <div style={{padding:16,paddingBottom:40}}>
+
+
+
+        {tab==="propuestas"&&<>
+
+          <div style={{fontSize:14,fontWeight:600,marginBottom:12,color:"#222"}}>Propuestas territoriales</div>
+
+          {[...propuestas].sort((a,b)=>b.votos-a.votos).map(p=>(
+
+            <Card key={p.id}>
+
+              <div style={{fontSize:13,fontWeight:600,color:"#222"}}>{p.titulo}</div>
+
+              <div style={{fontSize:11,color:"#888",marginTop:3}}>{p.municipio} · por {p.autor} · {p.fecha}</div>
+
+              <div style={{display:"flex",alignItems:"center",gap:8,marginTop:6}}>
+
+                <Badge label={p.categoria}/>
+
+                {p.estado==="elevada"&&<span style={{fontSize:10,color:"#27500A",fontWeight:600}}>✓ elevada al senado</span>}
+
+              </div>
+
+              <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginTop:8}}>
+
+                <button onClick={()=>votar(p.id)} style={{display:"flex",alignItems:"center",gap:4,fontSize:12,color:PURPLE,background:"none",border:"1px solid "+PURPLE,borderRadius:99,padding:"3px 10px",cursor:"pointer",fontWeight:500}}>
+
+                  ↑ {p.votos} apoyos
+
+                </button>
+
+                {role==="admin"&&p.estado!=="elevada"&&(
+
+                  <button onClick={()=>elevar(p.id)} style={{fontSize:11,color:"#27500A",background:"#EAF3DE",border:"none",borderRadius:99,padding:"3px 10px",cursor:"pointer",fontWeight:500}}>Elevar al senado</button>
+
+                )}
+
+              </div>
+
+            </Card>
+
+          ))}
+
+          <div style={{fontSize:14,fontWeight:600,margin:"20px 0 12px",color:"#222"}}>Nueva propuesta</div>
+
+          <Inp label="Tu nombre" value={pNombre} onChange={e=>setPNombre(e.target.value)} placeholder="Nombre y apellido"/>
+
+          <Sel label="Municipio" options={MUNICIPIOS} value={pMuni} onChange={e=>setPMuni(e.target.value)}/>
+
+          <Sel label="Categoría" options={CATEGORIAS_PROP} value={pCat} onChange={e=>setPCat(e.target.value)}/>
+
+          <Txta label="Propuesta" value={pTitulo} onChange={e=>setPTitulo(e.target.value)} placeholder="Describí tu propuesta..."/>
+
+          <Btn onClick={enviarPropuesta}>Enviar propuesta</Btn>
+
+        </>}
+
+
+
+        {tab==="problemas"&&<>
+
+          <div style={{fontSize:14,fontWeight:600,marginBottom:12,color:"#222"}}>Inconvenientes reportados</div>
+
+          {problemas.map(p=>(
+
+            <Card key={p.id} urgent={p.urgente}>
+
+              <div style={{fontSize:13,fontWeight:600,color:"#222"}}>{p.titulo}</div>
+
+              <div style={{fontSize:11,color:"#888",marginTop:3}}>{p.municipio} · por {p.autor} · {p.fecha}</div>
+
+              <div style={{marginTop:6,display:"flex",gap:6}}>
+
+                <Badge label={p.categoria}/>
+
+                {p.urgente&&<Badge label="urgente"/>}
+
+              </div>
+
+            </Card>
+
+          ))}
+
+          <div style={{fontSize:14,fontWeight:600,margin:"20px 0 12px",color:"#222"}}>Reportar problema</div>
+
+          <Inp label="Tu nombre" value={pbNombre} onChange={e=>setPbNombre(e.target.value)} placeholder="Nombre y apellido"/>
+
+          <Sel label="Municipio" options={MUNICIPIOS} value={pbMuni} onChange={e=>setPbMuni(e.target.value)}/>
+
+          <Sel label="Categoría" options={CATEGORIAS_PROB} value={pbCat} onChange={e=>setPbCat(e.target.value)}/>
+
+          <Txta label="Descripción" value={pbTitulo} onChange={e=>setPbTitulo(e.target.value)} placeholder="Describí el problema..."/>
+
+          <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:10}}>
+
+            <input type="checkbox" id="urg" checked={pbUrgente} onChange={e=>setPbUrgente(e.target.checked)}/>
+
+            <label htmlFor="urg" style={{fontSize:13,color:"#222"}}>Marcar como urgente</label>
+
+          </div>
+
+          <Btn onClick={enviarProblema}>Enviar reporte</Btn>
+
+        </>}
+
+
+
+        {tab==="agenda"&&<>
+
+          <div style={{fontSize:14,fontWeight:600,marginBottom:12,color:"#222"}}>Próximas actividades</div>
+
+          {agenda.map(a=>{
+
+            const d=new Date(a.fecha+"T12:00:00");
+
+            return(
+
+              <div key={a.id} style={{display:"flex",gap:12,alignItems:"flex-start",marginBottom:12}}>
+
+                <div style={{background:PURPLE,color:"#fff",borderRadius:8,padding:"6px 10px",textAlign:"center",minWidth:46}}>
+
+                  <div style={{fontSize:18,fontWeight:700,lineHeight:1}}>{d.getDate()}</div>
+
+                  <div style={{fontSize:10,opacity:0.8}}>{MESES[d.getMonth()]}</div>
+
+                </div>
+
+                <div style={{flex:1,background:"#f9f9f9",borderRadius:8,padding:"10px 12px",border:"1px solid #e5e5e5"}}>
+
+                  <div style={{fontSize:13,fontWeight:600,color:"#222"}}>{a.titulo}</div>
+
+                  <div style={{fontSize:11,color:"#888",marginTop:3}}>{a.hora&&a.hora+" hs · "}{a.lugar} · {a.municipio}</div>
+
+                </div>
+
+              </div>
+
+            );
+
+          })}
+
+          <div style={{fontSize:14,fontWeight:600,margin:"20px 0 12px",color:"#222"}}>Agregar actividad</div>
+
+          <Inp label="Nombre del evento" value={agTitulo} onChange={e=>setAgTitulo(e.target.value)} placeholder="Ej: Reunión barrial..."/>
+
+          <Sel label="Municipio" options={MUNICIPIOS} value={agMuni} onChange={e=>setAgMuni(e.target.value)}/>
+
+          <Inp label="Lugar" value={agLugar} onChange={e=>setAgLugar(e.target.value)} placeholder="Salón, plaza, dirección..."/>
+
+          <Inp label="Fecha" type="date" value={agFecha} onChange={e=>setAgFecha(e.target.value)}/>
+
+          <Inp label="Hora" type="time" value={agHora} onChange={e=>setAgHora(e.target.value)}/>
+
+          <Btn onClick={agregarAgenda}>Agregar a la agenda</Btn>
+
+        </>}
+
+
+
+        {tab==="panel"&&role==="admin"&&<>
+
+          <div style={{fontSize:14,fontWeight:600,marginBottom:12,color:"#222"}}>Panel de la Senadora Ávila</div>
+
+          <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10,marginBottom:16}}>
+
+            {[
+
+              {num:propuestas.length,label:"Propuestas"},
+
+              {num:problemas.length,label:"Problemas"},
+
+              {num:[...new Set(propuestas.map(p=>p.municipio))].length,label:"Municipios activos"},
+
+              {num:agenda.length,label:"Eventos"},
+
+            ].map((s,i)=>(
+
+              <div key={i} style={{background:"#f4f0ff",borderRadius:8,padding:12,textAlign:"center"}}>
+
+                <div style={{fontSize:26,fontWeight:700,color:PURPLE}}>{s.num}</div>
+
+                <div style={{fontSize:11,color:"#666",marginTop:2}}>{s.label}</div>
+
+              </div>
+
+            ))}
+
+          </div>
+
+          <div style={{fontSize:13,fontWeight:600,marginBottom:8,color:"#222"}}>Top propuestas por apoyo</div>
+
+          {top5.map(p=>(
+
+            <Card key={p.id}>
+
+              <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start"}}>
+
+                <div style={{flex:1}}>
+
+                  <div style={{fontSize:13,fontWeight:600,color:"#222"}}>{p.titulo}</div>
+
+                  <div style={{fontSize:11,color:"#888",marginTop:2}}>{p.municipio}</div>
+
+                  <Badge label={p.categoria}/>
+
+                </div>
+
+                <div style={{textAlign:"right",minWidth:60}}>
+
+                  <div style={{fontSize:18,fontWeight:700,color:PURPLE}}>{p.votos}</div>
+
+                  <div style={{fontSize:10,color:"#888"}}>apoyos</div>
+
+                  {p.estado!=="elevada"&&<button onClick={()=>elevar(p.id)} style={{marginTop:4,fontSize:10,color:"#27500A",background:"#EAF3DE",border:"none",borderRadius:99,padding:"2px 8px",cursor:"pointer",fontWeight:500}}>Elevar</button>}
+
+                </div>
+
+              </div>
+
+            </Card>
+
+          ))}
+
+          <div style={{fontSize:13,fontWeight:600,margin:"12px 0 8px",color:"#222"}}>Problemas urgentes</div>
+
+          {problemas.filter(p=>p.urgente).length===0
+
+            ?<div style={{fontSize:13,color:"#888"}}>Sin problemas urgentes</div>
+
+            :problemas.filter(p=>p.urgente).map(p=>(
+
+              <Card key={p.id} urgent>
+
+                <div style={{fontSize:13,fontWeight:600,color:"#222"}}>{p.titulo}</div>
+
+                <div style={{fontSize:11,color:"#888",marginTop:2}}>{p.municipio} · {p.fecha}</div>
+
+                <Badge label="urgente"/>
+
+              </Card>
+
+            ))
+
+          }
+
+        </>}
+
+      </div>
+
+      <Toast msg={toast}/>
+
+    </div>
+
+  );
+
+}
+
+
+
+ReactDOM.createRoot(document.getElementById("root")).render(<App/>);
+
+</script>
+
+</body>
+
+</html>
