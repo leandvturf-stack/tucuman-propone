@@ -1,0 +1,320 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2685.6">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
+  </style>
+</head>
+<body>
+<p class="p1">&lt;!DOCTYPE html&gt;</p>
+<p class="p1">&lt;html lang="es"&gt;</p>
+<p class="p1">&lt;head&gt;</p>
+<p class="p1">&lt;meta charset="UTF-8"/&gt;</p>
+<p class="p1">&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"/&gt;</p>
+<p class="p1">&lt;title&gt;Tucumán Propone&lt;/title&gt;</p>
+<p class="p1">&lt;script src="https://unpkg.com/react@18/umd/react.production.min.js"&gt;&lt;/script&gt;</p>
+<p class="p1">&lt;script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"&gt;&lt;/script&gt;</p>
+<p class="p1">&lt;script src="https://unpkg.com/@babel/standalone/babel.min.js"&gt;&lt;/script&gt;</p>
+<p class="p1">&lt;style&gt;</p>
+<p class="p1">*{box-sizing:border-box;margin:0;padding:0;}</p>
+<p class="p1">body{font-family:system-ui,sans-serif;min-height:100vh;}</p>
+<p class="p1">input,select,textarea,button{font-family:inherit;}</p>
+<p class="p1">&lt;/style&gt;</p>
+<p class="p1">&lt;/head&gt;</p>
+<p class="p1">&lt;body&gt;</p>
+<p class="p1">&lt;div id="root"&gt;&lt;/div&gt;</p>
+<p class="p1">&lt;script type="text/babel"&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">const ADMIN_CODE = "senadoraavila2026";</p>
+<p class="p1">const MILITANTE_CODE = "tucuman2026";</p>
+<p class="p1">const PURPLE = "#4B2C8A";</p>
+<p class="p1">const FOTO = "https://res.cloudinary.com/djml0aqsp/image/upload/v1780012931/Beatriz-Avila-1_xmrzdi.webp";</p>
+<p class="p2"><br></p>
+<p class="p1">const MESES = ["ENE","FEB","MAR","ABR","MAY","JUN","JUL","AGO","SEP","OCT","NOV","DIC"];</p>
+<p class="p2"><br></p>
+<p class="p1">const MUNICIPIOS = ["San Miguel de Tucumán","Banda del Río Salí","Tafí Viejo","Yerba Buena","Lules","Famaillá","Monteros","Concepción","Aguilares","Alberdi","Simoca","Graneros","Otro"];</p>
+<p class="p1">const CATEGORIAS_PROP = ["Infraestructura","Salud","Educación","Seguridad","Medioambiente","Economía","Otro"];</p>
+<p class="p1">const CATEGORIAS_PROB = ["Infraestructura","Salud","Seguridad","Medioambiente","Servicios","Otro"];</p>
+<p class="p2"><br></p>
+<p class="p1">const badgeColor = {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>Infraestructura:{bg:"#EEEDFE",color:"#3C3489"},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>Salud:{bg:"#EAF3DE",color:"#27500A"},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>Educación:{bg:"#E6F1FB",color:"#0C447C"},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>Seguridad:{bg:"#FCEBEB",color:"#791F1F"},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>Medioambiente:{bg:"#EAF3DE",color:"#27500A"},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>Economía:{bg:"#FAEEDA",color:"#633806"},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>Servicios:{bg:"#FAEEDA",color:"#633806"},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>urgente:{bg:"#FCEBEB",color:"#791F1F"},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>Otro:{bg:"#F1EFE8",color:"#444441"},</p>
+<p class="p1">};</p>
+<p class="p2"><br></p>
+<p class="p1">const DEFAULT_DATA = {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>propuestas:[</p>
+<p class="p1"><span class="Apple-converted-space">    </span>{id:1,titulo:"Pavimentación en barrio Oeste",municipio:"San Miguel de Tucumán",categoria:"Infraestructura",autor:"Carlos M.",votos:18,estado:"pendiente",fecha:"2025-05-01"},</p>
+<p class="p1"><span class="Apple-converted-space">    </span>{id:2,titulo:"Centro de salud en Tafí Viejo",municipio:"Tafí Viejo",categoria:"Salud",autor:"María G.",votos:32,estado:"elevada",fecha:"2025-04-28"},</p>
+<p class="p1"><span class="Apple-converted-space">    </span>{id:3,titulo:"Iluminación en acceso a Lules",municipio:"Lules",categoria:"Infraestructura",autor:"Roberto S.",votos:14,estado:"pendiente",fecha:"2025-05-05"},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>],</p>
+<p class="p1"><span class="Apple-converted-space">  </span>problemas:[</p>
+<p class="p1"><span class="Apple-converted-space">    </span>{id:4,titulo:"Cortes de agua frecuentes",municipio:"Banda del Río Salí",categoria:"Servicios",autor:"Ana P.",urgente:true,fecha:"2025-05-13"},</p>
+<p class="p1"><span class="Apple-converted-space">    </span>{id:5,titulo:"Basural en zona industrial",municipio:"Yerba Buena",categoria:"Medioambiente",autor:"Luis R.",urgente:false,fecha:"2025-05-10"},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>],</p>
+<p class="p1"><span class="Apple-converted-space">  </span>agenda:[</p>
+<p class="p1"><span class="Apple-converted-space">    </span>{id:6,titulo:"Reunión de juventudes LLA",municipio:"San Miguel de Tucumán",lugar:"Casa de la Juventud",fecha:"2025-05-18",hora:"18:00"},</p>
+<p class="p1"><span class="Apple-converted-space">    </span>{id:7,titulo:"Visita territorial",municipio:"Tafí Viejo",lugar:"Plaza central",fecha:"2025-05-22",hora:"10:00"},</p>
+<p class="p1"><span class="Apple-converted-space">    </span>{id:8,titulo:"Acto con la Senadora Ávila",municipio:"Monteros",lugar:"Teatro Municipal",fecha:"2025-05-30",hora:"19:00"},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>],</p>
+<p class="p1"><span class="Apple-converted-space">  </span>nextId:9</p>
+<p class="p1">};</p>
+<p class="p2"><br></p>
+<p class="p1">function load(key,fallback){try{const v=localStorage.getItem(key);return v?JSON.parse(v):fallback;}catch(e){return fallback;}}</p>
+<p class="p1">function save(key,val){try{localStorage.setItem(key,JSON.stringify(val));}catch(e){}}</p>
+<p class="p2"><br></p>
+<p class="p1">function Badge({label}){const s=badgeColor[label]||badgeColor["Otro"];return &lt;span style={{display:"inline-block",fontSize:10,padding:"2px 8px",borderRadius:99,background:s.bg,color:s.color,marginTop:6}}&gt;{label}&lt;/span&gt;;}</p>
+<p class="p1">function Toast({msg}){return msg?&lt;div style={{position:"fixed",bottom:24,left:"50%",transform:"translateX(-50%)",background:"#27500A",color:"#EAF3DE",padding:"10px 20px",borderRadius:99,fontSize:13,zIndex:999,whiteSpace:"nowrap"}}&gt;{msg}&lt;/div&gt;:null;}</p>
+<p class="p1">function Inp({label,...p}){return &lt;div style={{marginBottom:10}}&gt;{label&amp;&amp;&lt;label style={{fontSize:12,color:"#555",display:"block",marginBottom:4,fontWeight:500}}&gt;{label}&lt;/label&gt;}&lt;input style={{width:"100%",fontSize:13,borderRadius:8,padding:"9px 10px",border:"1px solid #ddd",background:"#fff",color:"#222"}} {...p}/&gt;&lt;/div&gt;;}</p>
+<p class="p1">function Sel({label,options,...p}){return &lt;div style={{marginBottom:10}}&gt;{label&amp;&amp;&lt;label style={{fontSize:12,color:"#555",display:"block",marginBottom:4,fontWeight:500}}&gt;{label}&lt;/label&gt;}&lt;select style={{width:"100%",fontSize:13,borderRadius:8,padding:"9px 10px",border:"1px solid #ddd",background:"#fff",color:"#222"}} {...p}&gt;{options.map(o=&gt;&lt;option key={o}&gt;{o}&lt;/option&gt;)}&lt;/select&gt;&lt;/div&gt;;}</p>
+<p class="p1">function Txta({label,...p}){return &lt;div style={{marginBottom:10}}&gt;{label&amp;&amp;&lt;label style={{fontSize:12,color:"#555",display:"block",marginBottom:4,fontWeight:500}}&gt;{label}&lt;/label&gt;}&lt;textarea style={{width:"100%",fontSize:13,borderRadius:8,padding:"9px 10px",border:"1px solid #ddd",background:"#fff",color:"#222",height:72,resize:"none",fontFamily:"inherit"}} {...p}/&gt;&lt;/div&gt;;}</p>
+<p class="p1">function Btn({children,...p}){return &lt;button style={{width:"100%",padding:11,background:PURPLE,color:"#fff",border:"none",borderRadius:8,fontSize:14,fontWeight:600,cursor:"pointer",marginTop:4}} {...p}&gt;{children}&lt;/button&gt;;}</p>
+<p class="p1">function Card({children,urgent}){return &lt;div style={{background:"#f9f9f9",borderRadius:8,padding:12,marginBottom:10,border:"1px solid "+(urgent?"#E24B4A":"#e5e5e5")}}&gt;{children}&lt;/div&gt;;}</p>
+<p class="p2"><br></p>
+<p class="p1">function App(){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const [screen,setScreen]=React.useState("login");</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const [role,setRole]=React.useState(null);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const [user,setUser]=React.useState("");</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const [pass,setPass]=React.useState("");</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const [loginErr,setLoginErr]=React.useState("");</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const [tab,setTab]=React.useState("propuestas");</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const [propuestas,setPropuestasRaw]=React.useState(()=&gt;load("tp_propuestas",DEFAULT_DATA.propuestas));</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const [problemas,setProblemasRaw]=React.useState(()=&gt;load("tp_problemas",DEFAULT_DATA.problemas));</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const [agenda,setAgendaRaw]=React.useState(()=&gt;load("tp_agenda",DEFAULT_DATA.agenda));</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const [nextId,setNextIdRaw]=React.useState(()=&gt;load("tp_nextid",DEFAULT_DATA.nextId));</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const [toast,setToast]=React.useState("");</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const [pNombre,setPNombre]=React.useState("");</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const [pMuni,setPMuni]=React.useState(MUNICIPIOS[0]);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const [pCat,setPCat]=React.useState(CATEGORIAS_PROP[0]);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const [pTitulo,setPTitulo]=React.useState("");</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const [pbNombre,setPbNombre]=React.useState("");</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const [pbMuni,setPbMuni]=React.useState(MUNICIPIOS[0]);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const [pbCat,setPbCat]=React.useState(CATEGORIAS_PROB[0]);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const [pbTitulo,setPbTitulo]=React.useState("");</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const [pbUrgente,setPbUrgente]=React.useState(false);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const [agTitulo,setAgTitulo]=React.useState("");</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const [agMuni,setAgMuni]=React.useState(MUNICIPIOS[0]);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const [agLugar,setAgLugar]=React.useState("");</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const [agFecha,setAgFecha]=React.useState("");</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const [agHora,setAgHora]=React.useState("");</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>function setPropuestas(fn){setPropuestasRaw(prev=&gt;{const next=typeof fn==="function"?fn(prev):fn;save("tp_propuestas",next);return next;});}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>function setProblemas(fn){setProblemasRaw(prev=&gt;{const next=typeof fn==="function"?fn(prev):fn;save("tp_problemas",next);return next;});}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>function setAgenda(fn){setAgendaRaw(prev=&gt;{const next=typeof fn==="function"?fn(prev):fn;save("tp_agenda",next);return next;});}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>function setNextId(fn){setNextIdRaw(prev=&gt;{const next=typeof fn==="function"?fn(prev):fn;save("tp_nextid",next);return next;});}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>function showToast(msg){setToast(msg);setTimeout(()=&gt;setToast(""),2500);}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>function login(){</p>
+<p class="p1"><span class="Apple-converted-space">    </span>if(pass===ADMIN_CODE){setRole("admin");setScreen("app");setLoginErr("");}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>else if(pass===MILITANTE_CODE){setRole("militante");setScreen("app");setLoginErr("");}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>else setLoginErr("Código incorrecto. Intentá de nuevo.");</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>function votar(id){setPropuestas(prev=&gt;prev.map(p=&gt;p.id===id?{...p,votos:p.votos+1}:p));showToast("Apoyo registrado");}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>function elevar(id){setPropuestas(prev=&gt;prev.map(p=&gt;p.id===id?{...p,estado:"elevada"}:p));showToast("Propuesta elevada al Senado");}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>function enviarPropuesta(){</p>
+<p class="p1"><span class="Apple-converted-space">    </span>if(!pNombre||!pTitulo){showToast("Completá nombre y propuesta");return;}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>setPropuestas(prev=&gt;[{id:nextId,titulo:pTitulo,municipio:pMuni,categoria:pCat,autor:pNombre,votos:0,estado:"pendiente",fecha:new Date().toISOString().slice(0,10)},...prev]);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>setNextId(n=&gt;n+1);setPNombre("");setPTitulo("");showToast("Propuesta enviada");</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>function enviarProblema(){</p>
+<p class="p1"><span class="Apple-converted-space">    </span>if(!pbNombre||!pbTitulo){showToast("Completá todos los campos");return;}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>setProblemas(prev=&gt;[{id:nextId,titulo:pbTitulo,municipio:pbMuni,categoria:pbCat,autor:pbNombre,urgente:pbUrgente,fecha:new Date().toISOString().slice(0,10)},...prev]);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>setNextId(n=&gt;n+1);setPbNombre("");setPbTitulo("");setPbUrgente(false);showToast("Problema reportado");</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>function agregarAgenda(){</p>
+<p class="p1"><span class="Apple-converted-space">    </span>if(!agTitulo||!agFecha){showToast("Completá título y fecha");return;}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>setAgenda(prev=&gt;[...prev,{id:nextId,titulo:agTitulo,municipio:agMuni,lugar:agLugar,fecha:agFecha,hora:agHora}].sort((a,b)=&gt;a.fecha.localeCompare(b.fecha)));</p>
+<p class="p1"><span class="Apple-converted-space">    </span>setNextId(n=&gt;n+1);setAgTitulo("");setAgLugar("");setAgFecha("");setAgHora("");showToast("Actividad guardada");</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>const top5=[...propuestas].sort((a,b)=&gt;b.votos-a.votos).slice(0,5);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const tabs=[{id:"propuestas",label:"Propuestas"},{id:"problemas",label:"Problemas"},{id:"agenda",label:"Agenda"},...(role==="admin"?[{id:"panel",label:"Panel"}]:[])];</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(screen==="login") return (</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div style={{background:"linear-gradient(rgba(40,20,80,0.72),rgba(50,25,100,0.80)),url('"+FOTO+"') center 30%/cover no-repeat",minHeight:"100vh",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",padding:20}}&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div style={{width:80,height:80,background:"rgba(255,255,255,0.18)",border:"3px solid rgba(255,255,255,0.8)",borderRadius:"50%",display:"flex",alignItems:"center",justifyContent:"center",color:"#fff",fontSize:26,fontWeight:800,marginBottom:12,textShadow:"0 2px 6px rgba(0,0,0,0.5)"}}&gt;TP&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div style={{fontSize:28,fontWeight:800,color:"#FFFFFF",textShadow:"0 2px 10px rgba(0,0,0,0.8)",marginBottom:6}}&gt;Tucumán Propone&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div style={{fontSize:15,fontWeight:700,color:"#FFFFFF",textShadow:"0 2px 8px rgba(0,0,0,0.9)",marginBottom:28}}&gt;Sra. Beatriz Ávila · Libertad Avanza Tucumán&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div style={{background:"#fff",borderRadius:16,padding:"28px 24px",boxShadow:"0 8px 32px rgba(0,0,0,0.35)",width:"100%",maxWidth:360}}&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;Inp label="Tu nombre" value={user} onChange={e=&gt;setUser(e.target.value)} placeholder="Nombre y apellido"/&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;Inp label="Código de acceso" value={pass} onChange={e=&gt;setPass(e.target.value)} type="password" placeholder="••••••••"/&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>{loginErr&amp;&amp;&lt;div style={{fontSize:12,color:"#A32D2D",marginBottom:8}}&gt;{loginErr}&lt;/div&gt;}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;Btn onClick={login}&gt;Ingresar&lt;/Btn&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div style={{fontSize:11,color:"#999",marginTop:12,textAlign:"center"}}&gt;Contactá a tu referente para obtener el código de acceso&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>return (</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div style={{maxWidth:420,margin:"0 auto",background:"#fff",minHeight:"100vh"}}&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div style={{background:"linear-gradient(rgba(75,44,138,0.55),rgba(75,44,138,0.70)),url('"+FOTO+"') center 30%/cover no-repeat",padding:"14px 20px",display:"flex",alignItems:"center",justifyContent:"space-between",position:"sticky",top:0,zIndex:10,minHeight:70}}&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div style={{display:"flex",alignItems:"center",gap:10}}&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div style={{width:36,height:36,background:"rgba(255,255,255,0.2)",border:"2px solid rgba(255,255,255,0.8)",borderRadius:"50%",display:"flex",alignItems:"center",justifyContent:"center",color:"#fff",fontSize:13,fontWeight:800}}&gt;TP&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div style={{color:"#fff",fontSize:15,fontWeight:700,textShadow:"0 1px 4px rgba(0,0,0,0.5)"}}&gt;Tucumán Propone&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div style={{color:"rgba(255,255,255,0.9)",fontSize:11,textShadow:"0 1px 3px rgba(0,0,0,0.5)"}}&gt;{user||"Militante"} · {role==="admin"?"Panel Ávila":"Militante"}&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;button onClick={()=&gt;{setScreen("login");setPass("");setUser("");}} style={{background:"none",border:"none",color:"rgba(255,255,255,0.9)",cursor:"pointer",fontSize:13,fontWeight:500}}&gt;Salir&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div style={{display:"flex",borderBottom:"1px solid #e5e5e5",position:"sticky",top:70,background:"#fff",zIndex:9}}&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>{tabs.map(t=&gt;(</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;button key={t.id} onClick={()=&gt;setTab(t.id)} style={{flex:1,padding:"10px 4px",background:"none",border:"none",borderBottom:tab===t.id?"2px solid "+PURPLE:"none",cursor:"pointer",fontSize:11,color:tab===t.id?PURPLE:"#888",fontWeight:tab===t.id?600:400}}&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{t.label}</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>))}</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div style={{padding:16,paddingBottom:40}}&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>{tab==="propuestas"&amp;&amp;&lt;&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div style={{fontSize:14,fontWeight:600,marginBottom:12,color:"#222"}}&gt;Propuestas territoriales&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>{[...propuestas].sort((a,b)=&gt;b.votos-a.votos).map(p=&gt;(</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;Card key={p.id}&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;div style={{fontSize:13,fontWeight:600,color:"#222"}}&gt;{p.titulo}&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;div style={{fontSize:11,color:"#888",marginTop:3}}&gt;{p.municipio} · por {p.autor} · {p.fecha}&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;div style={{display:"flex",alignItems:"center",gap:8,marginTop:6}}&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;Badge label={p.categoria}/&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{p.estado==="elevada"&amp;&amp;&lt;span style={{fontSize:10,color:"#27500A",fontWeight:600}}&gt;✓ elevada al senado&lt;/span&gt;}</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginTop:8}}&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;button onClick={()=&gt;votar(p.id)} style={{display:"flex",alignItems:"center",gap:4,fontSize:12,color:PURPLE,background:"none",border:"1px solid "+PURPLE,borderRadius:99,padding:"3px 10px",cursor:"pointer",fontWeight:500}}&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                  </span>↑ {p.votos} apoyos</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{role==="admin"&amp;&amp;p.estado!=="elevada"&amp;&amp;(</p>
+<p class="p1"><span class="Apple-converted-space">                  </span>&lt;button onClick={()=&gt;elevar(p.id)} style={{fontSize:11,color:"#27500A",background:"#EAF3DE",border:"none",borderRadius:99,padding:"3px 10px",cursor:"pointer",fontWeight:500}}&gt;Elevar al senado&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>)}</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/Card&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>))}</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div style={{fontSize:14,fontWeight:600,margin:"20px 0 12px",color:"#222"}}&gt;Nueva propuesta&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;Inp label="Tu nombre" value={pNombre} onChange={e=&gt;setPNombre(e.target.value)} placeholder="Nombre y apellido"/&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;Sel label="Municipio" options={MUNICIPIOS} value={pMuni} onChange={e=&gt;setPMuni(e.target.value)}/&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;Sel label="Categoría" options={CATEGORIAS_PROP} value={pCat} onChange={e=&gt;setPCat(e.target.value)}/&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;Txta label="Propuesta" value={pTitulo} onChange={e=&gt;setPTitulo(e.target.value)} placeholder="Describí tu propuesta..."/&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;Btn onClick={enviarPropuesta}&gt;Enviar propuesta&lt;/Btn&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/&gt;}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>{tab==="problemas"&amp;&amp;&lt;&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div style={{fontSize:14,fontWeight:600,marginBottom:12,color:"#222"}}&gt;Inconvenientes reportados&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>{problemas.map(p=&gt;(</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;Card key={p.id} urgent={p.urgente}&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;div style={{fontSize:13,fontWeight:600,color:"#222"}}&gt;{p.titulo}&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;div style={{fontSize:11,color:"#888",marginTop:3}}&gt;{p.municipio} · por {p.autor} · {p.fecha}&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;div style={{marginTop:6,display:"flex",gap:6}}&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;Badge label={p.categoria}/&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>{p.urgente&amp;&amp;&lt;Badge label="urgente"/&gt;}</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/Card&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>))}</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div style={{fontSize:14,fontWeight:600,margin:"20px 0 12px",color:"#222"}}&gt;Reportar problema&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;Inp label="Tu nombre" value={pbNombre} onChange={e=&gt;setPbNombre(e.target.value)} placeholder="Nombre y apellido"/&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;Sel label="Municipio" options={MUNICIPIOS} value={pbMuni} onChange={e=&gt;setPbMuni(e.target.value)}/&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;Sel label="Categoría" options={CATEGORIAS_PROB} value={pbCat} onChange={e=&gt;setPbCat(e.target.value)}/&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;Txta label="Descripción" value={pbTitulo} onChange={e=&gt;setPbTitulo(e.target.value)} placeholder="Describí el problema..."/&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div style={{display:"flex",alignItems:"center",gap:8,marginBottom:10}}&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;input type="checkbox" id="urg" checked={pbUrgente} onChange={e=&gt;setPbUrgente(e.target.checked)}/&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;label htmlFor="urg" style={{fontSize:13,color:"#222"}}&gt;Marcar como urgente&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;Btn onClick={enviarProblema}&gt;Enviar reporte&lt;/Btn&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/&gt;}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>{tab==="agenda"&amp;&amp;&lt;&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div style={{fontSize:14,fontWeight:600,marginBottom:12,color:"#222"}}&gt;Próximas actividades&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>{agenda.map(a=&gt;{</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const d=new Date(a.fecha+"T12:00:00");</p>
+<p class="p1"><span class="Apple-converted-space">            </span>return(</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;div key={a.id} style={{display:"flex",gap:12,alignItems:"flex-start",marginBottom:12}}&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div style={{background:PURPLE,color:"#fff",borderRadius:8,padding:"6px 10px",textAlign:"center",minWidth:46}}&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                  </span>&lt;div style={{fontSize:18,fontWeight:700,lineHeight:1}}&gt;{d.getDate()}&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                  </span>&lt;div style={{fontSize:10,opacity:0.8}}&gt;{MESES[d.getMonth()]}&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div style={{flex:1,background:"#f9f9f9",borderRadius:8,padding:"10px 12px",border:"1px solid #e5e5e5"}}&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                  </span>&lt;div style={{fontSize:13,fontWeight:600,color:"#222"}}&gt;{a.titulo}&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                  </span>&lt;div style={{fontSize:11,color:"#888",marginTop:3}}&gt;{a.hora&amp;&amp;a.hora+" hs · "}{a.lugar} · {a.municipio}&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>);</p>
+<p class="p1"><span class="Apple-converted-space">          </span>})}</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div style={{fontSize:14,fontWeight:600,margin:"20px 0 12px",color:"#222"}}&gt;Agregar actividad&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;Inp label="Nombre del evento" value={agTitulo} onChange={e=&gt;setAgTitulo(e.target.value)} placeholder="Ej: Reunión barrial..."/&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;Sel label="Municipio" options={MUNICIPIOS} value={agMuni} onChange={e=&gt;setAgMuni(e.target.value)}/&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;Inp label="Lugar" value={agLugar} onChange={e=&gt;setAgLugar(e.target.value)} placeholder="Salón, plaza, dirección..."/&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;Inp label="Fecha" type="date" value={agFecha} onChange={e=&gt;setAgFecha(e.target.value)}/&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;Inp label="Hora" type="time" value={agHora} onChange={e=&gt;setAgHora(e.target.value)}/&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;Btn onClick={agregarAgenda}&gt;Agregar a la agenda&lt;/Btn&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/&gt;}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>{tab==="panel"&amp;&amp;role==="admin"&amp;&amp;&lt;&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div style={{fontSize:14,fontWeight:600,marginBottom:12,color:"#222"}}&gt;Panel de la Senadora Ávila&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10,marginBottom:16}}&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{[</p>
+<p class="p1"><span class="Apple-converted-space">              </span>{num:propuestas.length,label:"Propuestas"},</p>
+<p class="p1"><span class="Apple-converted-space">              </span>{num:problemas.length,label:"Problemas"},</p>
+<p class="p1"><span class="Apple-converted-space">              </span>{num:[...new Set(propuestas.map(p=&gt;p.municipio))].length,label:"Municipios activos"},</p>
+<p class="p1"><span class="Apple-converted-space">              </span>{num:agenda.length,label:"Eventos"},</p>
+<p class="p1"><span class="Apple-converted-space">            </span>].map((s,i)=&gt;(</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;div key={i} style={{background:"#f4f0ff",borderRadius:8,padding:12,textAlign:"center"}}&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div style={{fontSize:26,fontWeight:700,color:PURPLE}}&gt;{s.num}&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div style={{fontSize:11,color:"#666",marginTop:2}}&gt;{s.label}&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>))}</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div style={{fontSize:13,fontWeight:600,marginBottom:8,color:"#222"}}&gt;Top propuestas por apoyo&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>{top5.map(p=&gt;(</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;Card key={p.id}&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start"}}&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div style={{flex:1}}&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                  </span>&lt;div style={{fontSize:13,fontWeight:600,color:"#222"}}&gt;{p.titulo}&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                  </span>&lt;div style={{fontSize:11,color:"#888",marginTop:2}}&gt;{p.municipio}&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                  </span>&lt;Badge label={p.categoria}/&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div style={{textAlign:"right",minWidth:60}}&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                  </span>&lt;div style={{fontSize:18,fontWeight:700,color:PURPLE}}&gt;{p.votos}&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                  </span>&lt;div style={{fontSize:10,color:"#888"}}&gt;apoyos&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                  </span>{p.estado!=="elevada"&amp;&amp;&lt;button onClick={()=&gt;elevar(p.id)} style={{marginTop:4,fontSize:10,color:"#27500A",background:"#EAF3DE",border:"none",borderRadius:99,padding:"2px 8px",cursor:"pointer",fontWeight:500}}&gt;Elevar&lt;/button&gt;}</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/Card&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>))}</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div style={{fontSize:13,fontWeight:600,margin:"12px 0 8px",color:"#222"}}&gt;Problemas urgentes&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>{problemas.filter(p=&gt;p.urgente).length===0</p>
+<p class="p1"><span class="Apple-converted-space">            </span>?&lt;div style={{fontSize:13,color:"#888"}}&gt;Sin problemas urgentes&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>:problemas.filter(p=&gt;p.urgente).map(p=&gt;(</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;Card key={p.id} urgent&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div style={{fontSize:13,fontWeight:600,color:"#222"}}&gt;{p.titulo}&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div style={{fontSize:11,color:"#888",marginTop:2}}&gt;{p.municipio} · {p.fecha}&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;Badge label="urgente"/&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;/Card&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>))</p>
+<p class="p1"><span class="Apple-converted-space">          </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/&gt;}</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;Toast msg={toast}/&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>);</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">ReactDOM.createRoot(document.getElementById("root")).render(&lt;App/&gt;);</p>
+<p class="p1">&lt;/script&gt;</p>
+<p class="p1">&lt;/body&gt;</p>
+<p class="p1">&lt;/html&gt;</p>
+</body>
+</html>
